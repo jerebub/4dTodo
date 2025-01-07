@@ -25,10 +25,11 @@ This app should allow users to do at least the following things:
 ## possible features
 additionally some features should be implemented
 [ ] reminder-notifications
-[ ] color-themes
+[ ] predefined color-themes
+[ ] responsive design
 [ ] auto-generation of repeted tasks
 [ ] initial popup for first time users explaining the method
 [ ] export and import of tasks
 
 ## used packages
-up until now no packages are used
+- [provider](https://pub.dev/packages/provider)
