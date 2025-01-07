@@ -11,7 +11,8 @@
 .svn/
 .swiftpm/
 migrate_working_dir/
-.metadata
+four_dimensional_todo/.metadata
+
 
 # IntelliJ related
 *.iml
