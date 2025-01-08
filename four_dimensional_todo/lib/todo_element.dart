@@ -1,12 +1,12 @@
 class TodoElement {
   String title;
-  String description;
+  String? description;
   bool done;
-  DateTime creationDate = DateTime.now();
-  DateTime? doneDate;
+  DateTime creationDate;
+  DateTime? dueDate;
   EisenhowerMatrixCategory eisenhowerMatrixCategory;
 
-  TodoElement({required this.title, required this.description, this.done = false, required this.eisenhowerMatrixCategory});
+  TodoElement({required this.title, required this.description, this.done = false, required this.eisenhowerMatrixCategory, required this.dueDate, required this.creationDate});
 }
 
 enum EisenhowerMatrixCategory {

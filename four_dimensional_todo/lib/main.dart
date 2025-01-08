@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'todoGenPage/todo_generator_page.dart';
+import 'todoPages/todo_view_page.dart';
 import 'todo_element.dart';
 
-void main() {
+
+void main(){
   runApp(const MyApp());
 }
 
@@ -48,7 +49,7 @@ class _MyHomePageState extends State<MyHomePage> {
     Widget page;
     switch (selectedIndex) {
       case 0:
-        page = TodoGeneratorPage(title: widget.title);
+        page = TodoViewerPage(title: widget.title);
       case 1:
         page = Placeholder();
       case 2:
