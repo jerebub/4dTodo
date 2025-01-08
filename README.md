@@ -15,25 +15,25 @@ This method is also known as the Eisenhower Matrix. It can be critized for being
 
 ## Goals
 This app should allow users to do at least the following things:
-[x] create Todo-Elements with assigned meta-data
-[ ] show Todo-Elements
-[ ] edit Todo-Elements
-[ ] save Todo-Elements locally
-[ ] have a page mentioning the used packages and the corresponding licenses
-[ ] multiple language support
+- [x] create Todo-Elements with assigned meta-data
+- [ ] show Todo-Elements
+- [ ] edit Todo-Elements
+- [ ] save Todo-Elements locally
+- [ ] have a page mentioning the used packages and the corresponding licenses
+- [ ] multiple language support
 
 ## possible features
 additionally some features should be implemented
-[ ] filter Todo-Elements
-[ ] reminder-notifications
-[ ] predefined color-themes
-[ ] responsive design
-[ ] auto-generation of repeted tasks
-[ ] initial popup for first time users explaining the method
-[ ] export and import of tasks
-[ ] location-dependent reminders
-[ ] assigning users to tasks
-[ ] statistics about tasks/score-board
+- [ ] filter Todo-Elements
+- [ ] reminder-notifications
+- [ ] predefined color-themes
+- [ ] responsive design
+- [ ] auto-generation of repeted tasks
+- [ ] initial popup for first time users explaining the method
+- [ ] export and import of tasks
+- [ ] location-dependent reminders
+- [ ] assigning users to tasks
+- [ ] statistics about tasks/score-board
 
 ## used packages
 - [intl](https://pub.dev/packages/intl)
