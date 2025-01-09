@@ -30,6 +30,11 @@ class MyApp extends StatelessWidget {
 class MyAppState extends ChangeNotifier {
   // write stuff in here needed for the general businesslogic of the app
   var todoList = <TodoElement>[];
+
+  void addTodoElement(TodoElement todoElement) {
+    todoList.add(todoElement);
+    notifyListeners();
+  }
 }
 
 class MyHomePage extends StatefulWidget {
@@ -95,33 +100,38 @@ class _MyHomePageState extends State<MyHomePage> {
       return Scaffold(
         body: Row(
           children: [
-            SafeArea(
-              child: NavigationRail(
-                leading: Padding(
-                  padding: const EdgeInsets.only(bottom: 8.0, left: 2.0, right: 2.0),
-                  child: Text(widget.title, style: style),
+            SingleChildScrollView(
+              child: ConstrainedBox(
+                constraints: BoxConstraints(minHeight: constraints.maxHeight),
+                child: IntrinsicHeight(
+                  child: NavigationRail(
+                    leading: Padding(
+                      padding: const EdgeInsets.only(bottom: 8.0, left: 2.0, right: 2.0),
+                      child: Text(widget.title, style: style),
+                    ),
+                    backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+                    extended: constraints.maxWidth > 600,
+                    destinations: [
+                      NavigationRailDestination(
+                        icon: Icon(Icons.home),
+                        label: Text('Home'),
+                      ),
+                      NavigationRailDestination(
+                        icon: Icon(Icons.history), 
+                        label: Text('History')),
+                      NavigationRailDestination(
+                        icon: Icon(Icons.settings),
+                        label: Text('Settings'),
+                      ),
+                    ],
+                    selectedIndex: selectedIndex,
+                    onDestinationSelected: (int index) {
+                      setState(() {
+                        selectedIndex = index;
+                      });
+                    },
+                  ),
                 ),
-                backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-                extended: constraints.maxWidth > 600,
-                destinations: [
-                  NavigationRailDestination(
-                    icon: Icon(Icons.home),
-                    label: Text('Home'),
-                  ),
-                  NavigationRailDestination(
-                    icon: Icon(Icons.history), 
-                    label: Text('History')),
-                  NavigationRailDestination(
-                    icon: Icon(Icons.settings),
-                    label: Text('Settings'),
-                  ),
-                ],
-                selectedIndex: selectedIndex,
-                onDestinationSelected: (int index) {
-                  setState(() {
-                    selectedIndex = index;
-                  });
-                },
               ),
             ),
             Expanded(
