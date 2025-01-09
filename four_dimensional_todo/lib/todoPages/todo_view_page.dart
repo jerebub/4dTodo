@@ -3,6 +3,7 @@ import 'package:four_dimensional_todo/todoPages/todo_generator_form.dart';
 import 'package:provider/provider.dart';
 
 import '../main.dart';
+import '../widgets/todo_card.dart';
 
 
 class TodoViewerPage extends StatefulWidget {
@@ -15,7 +16,6 @@ class TodoViewerPage extends StatefulWidget {
 }
 
 class _TodoViewerPageState extends State<TodoViewerPage> {
-  int _counter = 0;
 
   void _createNewTodo() {
     var appState = context.read<MyAppState>();
@@ -26,12 +26,6 @@ class _TodoViewerPageState extends State<TodoViewerPage> {
         child: TodoGeneratorForm(appState: appState,),
       ),
     );
-  }
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
   }
 
   @override
@@ -56,31 +50,9 @@ class _TodoViewerPageState extends State<TodoViewerPage> {
         child: ListView(
           children: [
             for (var todo in todoList)
-              ListTile(
-                title: Text(todo.title),
-                subtitle: Text(todo.description ?? ''),
-                trailing: Checkbox(
-                  value: todo.done,
-                  onChanged: (value) {
-                    todo.done = value!;
-                    setState(() {});
-                  },
-                ),
-              ),
+              TodoCard(todoElement: todo),
           ],
         ),
-        // Column(
-        //   mainAxisAlignment: MainAxisAlignment.center,
-        //   children: <Widget>[
-        //     const Text(
-        //       'You have pushed the button sooo many times:',
-        //     ),
-        //     Text(
-        //       '$_counter',
-        //       style: Theme.of(context).textTheme.headlineMedium,
-        //     ),
-        //   ],
-        // ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () => _createNewTodo(),
