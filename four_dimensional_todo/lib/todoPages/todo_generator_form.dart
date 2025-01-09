@@ -3,6 +3,7 @@ import 'package:four_dimensional_todo/main.dart';
 import 'package:four_dimensional_todo/todo_element.dart';
 import 'package:intl/intl.dart';
 
+// ignore: must_be_immutable
 class TodoGeneratorForm extends StatefulWidget {
   final MyAppState appState;
   TodoGeneratorForm({super.key, required this.appState});
@@ -16,8 +17,12 @@ class TodoGeneratorForm extends StatefulWidget {
   var urgency = 'urgent';
   var importance = 'important';
   var done = false;
+  // ignore: prefer_typing_uninitialized_variables
+  var title;
+  // ignore: prefer_typing_uninitialized_variables
+  var description;
 
-  void saveTodo(String title, String description) {
+  void saveTodo(String title, String? description) {
     //determine the eisenhower matrix category
     var eisenhoverMatrixCategory = EisenhowerMatrixCategory.urgentImportant;
     if (urgency == 'urgent' && importance == 'important') {
@@ -38,7 +43,7 @@ class TodoGeneratorForm extends StatefulWidget {
       creationDate: creationDate,
     );
     // adding todo to todoList
-    appState.todoList.add(newTodo);
+    appState.addTodoElement(newTodo);
   }
 }
 
@@ -46,8 +51,6 @@ class _TodoGeneratorFormState extends State<TodoGeneratorForm> {
   final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
-    TextEditingController titleController = TextEditingController();
-    TextEditingController descriptionController = TextEditingController();
     var dueDateString = 'No due date';
     if (widget.dueDate != null) {
       dueDateString = widget.dateFormat.format(widget.dueDate);
@@ -68,7 +71,8 @@ class _TodoGeneratorFormState extends State<TodoGeneratorForm> {
                   children: [
                     TextFormField(
                       decoration: const InputDecoration(labelText: 'Title'),
-                      controller: titleController,
+                      initialValue: widget.title,
+                      onChanged: (value) => widget.title = value,
                       validator: (value) {
                         if (value == null || value.isEmpty) {
                           return 'Please enter a title';
@@ -78,9 +82,11 @@ class _TodoGeneratorFormState extends State<TodoGeneratorForm> {
                     ),
                     SizedBox(height: 8),
                     TextFormField(
-                      controller: descriptionController,
                       decoration:
                           const InputDecoration(labelText: 'Description'),
+                          maxLines: null,
+                      initialValue: widget.description,
+                      onChanged: (value) => widget.description = value,
                       validator: (value) {
                         return null;
                       },
@@ -192,7 +198,7 @@ class _TodoGeneratorFormState extends State<TodoGeneratorForm> {
                         onPressed: () {
                           if (_formKey.currentState!.validate()) {
                             setState(() {
-                              widget.saveTodo(titleController.text, descriptionController.text);
+                              widget.saveTodo(widget.title, widget.description);
                               Navigator.of(context).pop();
                             });
                           }
