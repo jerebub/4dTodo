@@ -1,10 +1,28 @@
+import 'dart:async';
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:path/path.dart';
+import 'package:sqflite/sqflite.dart';
+import 'package:sqflite_common_ffi/sqflite_ffi.dart';
+
 import 'package:provider/provider.dart';
 import 'todoPages/todo_view_page.dart';
 import 'todo_element.dart';
 
-
-void main(){
+void main() async {
+  if (Platform.isWindows || Platform.isLinux) {
+    sqfliteFfiInit();
+    databaseFactory = databaseFactoryFfi;
+  }
+  WidgetsFlutterBinding.ensureInitialized();
+  final database =
+      openDatabase(join(await getDatabasesPath(), 'todo_database.db'),
+          onCreate: (db, version) {
+    return db.execute(
+      'CREATE TABLE todos(id INTEGER PRIMARY KEY, title TEXT, description TEXT, done INTEGER, archived INTEGER, creationDate TEXT, dueDate TEXT, eisenhowerMatrixCategory TEXT)',
+    );
+  }, version: 1);
   runApp(const MyApp());
 }
 
@@ -30,9 +48,73 @@ class MyApp extends StatelessWidget {
 class MyAppState extends ChangeNotifier {
   // write stuff in here needed for the general businesslogic of the app
   var todoList = <TodoElement>[];
+  // var numberOfTodos = 0;
 
-  void addTodoElement(TodoElement todoElement) {
+  TodoElement getTodoElementFromMap(Map map) {
+    return TodoElement(
+      id: map['id'] ?? -1,
+      title: map['title'],
+      description: map['description'] != null && map['description'] != ''
+          ? map['description']
+          : null,
+      done: map['done'] == 1,
+      archived: map['archived'] == 1,
+      creationDate: DateTime.parse(map['creationDate']),
+      dueDate: map['dueDate'] != null && map['dueDate'] != ''
+          ? DateTime.parse(map['dueDate'])
+          : null,
+      eisenhowerMatrixCategory:
+          TodoElement.stringToCategory(map['eisenhowerMatrixCategory']),
+    );
+  }
+
+  Future<void> getTodoElementsFromDB() async {
+    final database =
+        openDatabase(join(await getDatabasesPath(), 'todo_database.db'));
+    final db = await database;
+    final List<Map<String, dynamic>> maps = await db.query('todos');
+    todoList = List.generate(maps.length, (i) {
+      return getTodoElementFromMap(maps[i]);
+    });
+    // numberOfTodos = todoList.length;
+    notifyListeners();
+  }
+
+  Future<void> addTodoElement(TodoElement todoElement) async {
+    final database =
+        openDatabase(join(await getDatabasesPath(), 'todo_database.db'));
+    final db = await database;
+    var id = await db.insert('todos', todoElement.toMap());
+    // todoElement.setID(numberOfTodos);
+    // numberOfTodos++;
+    todoElement.setID(id);
     todoList.add(todoElement);
+    notifyListeners();
+  }
+
+  Future<void> updateTodoElement(TodoElement todoElement) async {
+    final database =
+        openDatabase(join(await getDatabasesPath(), 'todo_database.db'));
+    final db = await database;
+    await db.update(
+      'todos',
+      todoElement.toMap(),
+      where: 'id = ?',
+      whereArgs: [todoElement.id],
+    );
+    notifyListeners();
+  }
+
+  Future<void> deleteTodoElement(TodoElement todoElement) async {
+    final database =
+        openDatabase(join(await getDatabasesPath(), 'todo_database.db'));
+    final db = await database;
+    await db.delete(
+      'todos',
+      where: 'id = ?',
+      whereArgs: [todoElement.id],
+    );
+    todoList.remove(todoElement);
     notifyListeners();
   }
 }
@@ -66,7 +148,7 @@ class _MyHomePageState extends State<MyHomePage> {
       if (constraints.maxWidth < 400) {
         return Column(
           children: [
-            Expanded(child:page),
+            Expanded(child: page),
             SafeArea(
               child: BottomNavigationBar(
                 showSelectedLabels: constraints.maxWidth > 300,
@@ -96,7 +178,9 @@ class _MyHomePageState extends State<MyHomePage> {
           ],
         );
       }
-      var style = (constraints.maxWidth > 600)? Theme.of(context).textTheme.displaySmall: Theme.of(context).textTheme.titleMedium;
+      var style = (constraints.maxWidth > 600)
+          ? Theme.of(context).textTheme.displaySmall
+          : Theme.of(context).textTheme.titleMedium;
       return Scaffold(
         body: Row(
           children: [
@@ -106,10 +190,12 @@ class _MyHomePageState extends State<MyHomePage> {
                 child: IntrinsicHeight(
                   child: NavigationRail(
                     leading: Padding(
-                      padding: const EdgeInsets.only(bottom: 8.0, left: 2.0, right: 2.0),
+                      padding: const EdgeInsets.only(
+                          bottom: 8.0, left: 2.0, right: 2.0),
                       child: Text(widget.title, style: style),
                     ),
-                    backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+                    backgroundColor:
+                        Theme.of(context).colorScheme.inversePrimary,
                     extended: constraints.maxWidth > 600,
                     destinations: [
                       NavigationRailDestination(
@@ -117,8 +203,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         label: Text('Home'),
                       ),
                       NavigationRailDestination(
-                        icon: Icon(Icons.history), 
-                        label: Text('History')),
+                          icon: Icon(Icons.history), label: Text('History')),
                       NavigationRailDestination(
                         icon: Icon(Icons.settings),
                         label: Text('Settings'),

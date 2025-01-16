@@ -5,7 +5,6 @@ import 'package:provider/provider.dart';
 import '../main.dart';
 import '../widgets/todo_card.dart';
 
-
 class TodoViewerPage extends StatefulWidget {
   const TodoViewerPage({super.key, required this.title});
 
@@ -16,6 +15,16 @@ class TodoViewerPage extends StatefulWidget {
 }
 
 class _TodoViewerPageState extends State<TodoViewerPage> {
+  @override
+  void initState() {
+    super.initState();
+    myInit();
+  }
+
+  void myInit() async {
+    var appState = context.read<MyAppState>();
+    await appState.getTodoElementsFromDB();
+  }
 
   void _createNewTodo() {
     var appState = context.read<MyAppState>();
@@ -23,7 +32,7 @@ class _TodoViewerPageState extends State<TodoViewerPage> {
       context: context,
       builder: (BuildContext context) => Dialog(
         alignment: Alignment.center,
-        child: TodoGeneratorForm(appState: appState,),
+        child: TodoGeneratorForm(),
       ),
     );
   }
@@ -47,11 +56,14 @@ class _TodoViewerPageState extends State<TodoViewerPage> {
     }
     return Scaffold(
       body: Center(
-        child: ListView(
-          children: [
-            for (var todo in todoList)
-              TodoCard(todoElement: todo),
-          ],
+        child: ListView.separated(
+          itemCount: todoList.length,
+          padding: const EdgeInsets.all(8),
+          itemBuilder: (context, index) {
+            return TodoCard(todoElement: todoList[index]);
+          },
+          separatorBuilder: (BuildContext context, int index) =>
+              Container(padding: EdgeInsets.all(8.0)),
         ),
       ),
       floatingActionButton: FloatingActionButton(

@@ -18,7 +18,7 @@ This app should allow users to do at least the following things:
 - [x] create Todo-Elements with assigned meta-data
 - [x] show Todo-Elements
 - [ ] edit Todo-Elements
-- [ ] save Todo-Elements locally
+- [x] save Todo-Elements locally
 - [ ] have a page mentioning the used packages and the corresponding licenses
 - [ ] multiple language support
 
@@ -38,3 +38,6 @@ additionally some features should be implemented
 ## used packages
 - [intl](https://pub.dev/packages/intl)
 - [provider](https://pub.dev/packages/provider)
+- [sqflite](https://pub.dev/packages/sqflite)
+- [sqflite_common_ffi](https://pub.dev/packages/sqflite_common_ffi)
+- [sqlite3_flutter_libs](https://pub.dev/packages/sqlite3_flutter_libs)
