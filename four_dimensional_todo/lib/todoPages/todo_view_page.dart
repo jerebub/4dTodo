@@ -18,12 +18,12 @@ class _TodoViewerPageState extends State<TodoViewerPage> {
   @override
   void initState() {
     super.initState();
-    myInit();
+    _myInit();
   }
 
-  void myInit() async {
+  void _myInit() async {
     var appState = context.read<MyAppState>();
-    await appState.getTodoElementsFromDB();
+    await appState.getUnarchivedTodoElementsFromDB();
   }
 
   void _createNewTodo() {

@@ -32,21 +32,21 @@ class _TodoGeneratorFormState extends State<TodoGeneratorForm> {
     creationDate ??= DateTime.now();
     var appState = context.read<MyAppState>();
     //determine the eisenhower matrix category
-    var eisenhoverMatrixCategory = EisenhowerMatrixCategory.urgentImportant;
+    var eisenhowerMatrixCategory = EisenhowerMatrixCategory.urgentImportant;
     if (urgency == 'urgent' && importance == 'important') {
-      eisenhoverMatrixCategory = EisenhowerMatrixCategory.urgentImportant;
+      eisenhowerMatrixCategory = EisenhowerMatrixCategory.urgentImportant;
     } else if (urgency == 'urgent' && importance == 'unimportant') {
-      eisenhoverMatrixCategory = EisenhowerMatrixCategory.urgentNotImportant;
+      eisenhowerMatrixCategory = EisenhowerMatrixCategory.urgentNotImportant;
     } else if (urgency == 'notUrgent' && importance == 'important') {
-      eisenhoverMatrixCategory = EisenhowerMatrixCategory.notUrgentImportant;
+      eisenhowerMatrixCategory = EisenhowerMatrixCategory.notUrgentImportant;
     } else if (urgency == 'notUrgent' && importance == 'unimportant') {
-      eisenhoverMatrixCategory = EisenhowerMatrixCategory.notUrgentNotImportant;
+      eisenhowerMatrixCategory = EisenhowerMatrixCategory.notUrgentNotImportant;
     }
     var newTodo = TodoElement(
       title: title,
       description: description,
       done: done,
-      eisenhowerMatrixCategory: eisenhoverMatrixCategory,
+      eisenhowerMatrixCategory: eisenhowerMatrixCategory,
       dueDate: dueDate,
       creationDate: creationDate,
     );

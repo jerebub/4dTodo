@@ -24,6 +24,10 @@ class TodoElement {
     done = !done;
   }
 
+  void markAsArchived(){
+    archived = !archived;
+  }
+
   Widget getIcon(){
     switch (eisenhowerMatrixCategory) {
       case EisenhowerMatrixCategory.urgentImportant:

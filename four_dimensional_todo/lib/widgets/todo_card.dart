@@ -13,19 +13,21 @@ class TodoCard extends StatefulWidget {
 }
 
 class _TodoCardState extends State<TodoCard> {
-  void onDone(TodoElement todo) async {
+  void _onDone(TodoElement todo) async {
     MyAppState appState = context.read<MyAppState>();
     todo.markAsDone();
     await appState.updateTodoElement(todo);
   }
 
-  void onDelete(TodoElement todo) async {
+  void _onDelete(TodoElement todo) async {
     var appState = context.read<MyAppState>();
     await appState.deleteTodoElement(todo);
   }
 
-  void onArchive() {
-    //TODO: implement onArchive
+  void _onArchive(TodoElement todo) async{
+    MyAppState appState = context.read<MyAppState>();
+    todo.markAsArchived();
+    await appState.updateTodoElement(todo);
   }
 
   @override
@@ -43,8 +45,8 @@ class _TodoCardState extends State<TodoCard> {
         onDismissed: (DismissDirection dir) {
           setState(() {
             dir == DismissDirection.endToStart
-                ? onArchive()
-                : onDelete(widget.todoElement);
+                ? _onArchive(widget.todoElement)
+                : _onDelete(widget.todoElement);
           });
         },
         background: Container(
@@ -68,7 +70,7 @@ class _TodoCardState extends State<TodoCard> {
         child: GestureDetector(
           onTap: () {
             setState(() {
-              onDone(widget.todoElement);
+              _onDone(widget.todoElement);
             });
           },
           child: Container(
@@ -114,7 +116,7 @@ class _TodoCardState extends State<TodoCard> {
                         : Icon(Icons.check_box_outline_blank),
                     onPressed: () {
                       setState(() {
-                        onDone(widget.todoElement);
+                        _onDone(widget.todoElement);
                       });
                     },
                   ),

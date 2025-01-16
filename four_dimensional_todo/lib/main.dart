@@ -48,6 +48,7 @@ class MyApp extends StatelessWidget {
 class MyAppState extends ChangeNotifier {
   // write stuff in here needed for the general businesslogic of the app
   var todoList = <TodoElement>[];
+  var archivedTodoList = <TodoElement>[];
 
   TodoElement getTodoElementFromMap(Map map) {
     return TodoElement(
@@ -67,12 +68,23 @@ class MyAppState extends ChangeNotifier {
     );
   }
 
-  Future<void> getTodoElementsFromDB() async {
+  Future<void> getUnarchivedTodoElementsFromDB() async {
     final database =
         openDatabase(join(await getDatabasesPath(), 'todo_database.db'));
     final db = await database;
-    final List<Map<String, dynamic>> maps = await db.query('todos');
+    final List<Map<String, dynamic>> maps = await db.query('todos WHERE archived = 0');
     todoList = List.generate(maps.length, (i) {
+      return getTodoElementFromMap(maps[i]);
+    });
+    notifyListeners();
+  }
+
+  Future<void> getArchivedTodoElementsFromDB() async {
+    final database =
+        openDatabase(join(await getDatabasesPath(), 'todo_database.db'));
+    final db = await database;
+    final List<Map<String, dynamic>> maps = await db.query('todos WHERE archived = 1');
+    archivedTodoList = List.generate(maps.length, (i) {
       return getTodoElementFromMap(maps[i]);
     });
     notifyListeners();
