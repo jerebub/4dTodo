@@ -50,7 +50,6 @@ class _TodoGeneratorFormState extends State<TodoGeneratorForm> {
       dueDate: dueDate,
       creationDate: creationDate,
     );
-    // appState.numberOfTodos++;
     // adding todo to todoList
     appState.addTodoElement(newTodo);
   }

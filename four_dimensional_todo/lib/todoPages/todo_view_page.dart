@@ -27,7 +27,6 @@ class _TodoViewerPageState extends State<TodoViewerPage> {
   }
 
   void _createNewTodo() {
-    var appState = context.read<MyAppState>();
     showDialog(
       context: context,
       builder: (BuildContext context) => Dialog(

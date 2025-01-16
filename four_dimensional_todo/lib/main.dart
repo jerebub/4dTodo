@@ -48,7 +48,6 @@ class MyApp extends StatelessWidget {
 class MyAppState extends ChangeNotifier {
   // write stuff in here needed for the general businesslogic of the app
   var todoList = <TodoElement>[];
-  // var numberOfTodos = 0;
 
   TodoElement getTodoElementFromMap(Map map) {
     return TodoElement(
@@ -76,7 +75,6 @@ class MyAppState extends ChangeNotifier {
     todoList = List.generate(maps.length, (i) {
       return getTodoElementFromMap(maps[i]);
     });
-    // numberOfTodos = todoList.length;
     notifyListeners();
   }
 
@@ -85,8 +83,6 @@ class MyAppState extends ChangeNotifier {
         openDatabase(join(await getDatabasesPath(), 'todo_database.db'));
     final db = await database;
     var id = await db.insert('todos', todoElement.toMap());
-    // todoElement.setID(numberOfTodos);
-    // numberOfTodos++;
     todoElement.setID(id);
     todoList.add(todoElement);
     notifyListeners();
