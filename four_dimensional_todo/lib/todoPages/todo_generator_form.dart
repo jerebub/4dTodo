@@ -2,14 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:four_dimensional_todo/main.dart';
 import 'package:four_dimensional_todo/todo_element.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
 // ignore: must_be_immutable
 class TodoGeneratorForm extends StatefulWidget {
-  final MyAppState appState;
-  TodoGeneratorForm({super.key, required this.appState});
+  const TodoGeneratorForm({super.key});
 
   @override
   State<TodoGeneratorForm> createState() => _TodoGeneratorFormState();
+  // ignore: prefer_typing_uninitialized_variables
+}
+
+class _TodoGeneratorFormState extends State<TodoGeneratorForm> {
+  final _formKey = GlobalKey<FormState>();
+
   // ignore: prefer_typing_uninitialized_variables
   var dueDate;
   var dateFormat = DateFormat('dd/MM/yyyy');
@@ -22,7 +28,9 @@ class TodoGeneratorForm extends StatefulWidget {
   // ignore: prefer_typing_uninitialized_variables
   var description;
 
-  void saveTodo(String title, String? description) {
+  void saveTodo({required String title, String? description, required String urgency, required String importance, DateTime? dueDate, bool done=false, DateTime? creationDate}) {
+    creationDate ??= DateTime.now();
+    var appState = context.read<MyAppState>();
     //determine the eisenhower matrix category
     var eisenhoverMatrixCategory = EisenhowerMatrixCategory.urgentImportant;
     if (urgency == 'urgent' && importance == 'important') {
@@ -42,20 +50,18 @@ class TodoGeneratorForm extends StatefulWidget {
       dueDate: dueDate,
       creationDate: creationDate,
     );
+    // appState.numberOfTodos++;
     // adding todo to todoList
     appState.addTodoElement(newTodo);
   }
-}
 
-class _TodoGeneratorFormState extends State<TodoGeneratorForm> {
-  final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     var dueDateString = 'No due date';
-    if (widget.dueDate != null) {
-      dueDateString = widget.dateFormat.format(widget.dueDate);
+    if (dueDate != null) {
+      dueDateString = dateFormat.format(dueDate);
     }
-    var creationDateString = widget.dateFormat.format(widget.creationDate);
+    var creationDateString = dateFormat.format(creationDate);
     return LayoutBuilder(builder: (context, constraints) {
       return Container(
         constraints: BoxConstraints(maxHeight: constraints.maxHeight * 0.8),
@@ -71,8 +77,9 @@ class _TodoGeneratorFormState extends State<TodoGeneratorForm> {
                   children: [
                     TextFormField(
                       decoration: const InputDecoration(labelText: 'Title'),
-                      initialValue: widget.title,
-                      onChanged: (value) => widget.title = value,
+                      autofocus: true,
+                      initialValue: title,
+                      onChanged: (value) => title = value,
                       validator: (value) {
                         if (value == null || value.isEmpty) {
                           return 'Please enter a title';
@@ -84,9 +91,9 @@ class _TodoGeneratorFormState extends State<TodoGeneratorForm> {
                     TextFormField(
                       decoration:
                           const InputDecoration(labelText: 'Description'),
-                          maxLines: null,
-                      initialValue: widget.description,
-                      onChanged: (value) => widget.description = value,
+                      maxLines: null,
+                      initialValue: description,
+                      onChanged: (value) => description = value,
                       validator: (value) {
                         return null;
                       },
@@ -99,15 +106,14 @@ class _TodoGeneratorFormState extends State<TodoGeneratorForm> {
                           onPressed: () async {
                             var newDate = await showDatePicker(
                               context: context,
-                              // initialDate: widget.dueDate,
                               firstDate: DateTime(1900),
                               lastDate: DateTime.now()
                                   .add(const Duration(days: 9999999)),
                             );
                             if (newDate == null) return;
                             setState(() {
-                              widget.dueDate = newDate;
-                              dueDateString = widget.dateFormat.format(newDate);
+                              dueDate = newDate;
+                              dueDateString = dateFormat.format(newDate);
                             });
                           },
                           child: Text(dueDateString),
@@ -122,16 +128,16 @@ class _TodoGeneratorFormState extends State<TodoGeneratorForm> {
                           onPressed: () async {
                             var newDate = await showDatePicker(
                               context: context,
-                              initialDate: widget.creationDate,
+                              initialDate: creationDate,
                               firstDate: DateTime(1900),
                               lastDate: DateTime.now()
                                   .add(const Duration(days: 9999999)),
                             );
                             if (newDate == null) return;
                             setState(() {
-                              widget.creationDate = newDate;
+                              creationDate = newDate;
                               creationDateString =
-                                  widget.dateFormat.format(newDate);
+                                  dateFormat.format(newDate);
                             });
                           },
                           child: Text(creationDateString),
@@ -152,10 +158,10 @@ class _TodoGeneratorFormState extends State<TodoGeneratorForm> {
                             value: 'notUrgent',
                           ),
                         ],
-                        selected: {widget.urgency},
+                        selected: {urgency},
                         onSelectionChanged: (selected) {
                           setState(() {
-                            widget.urgency = selected.first;
+                            urgency = selected.first;
                           });
                         },
                       ),
@@ -174,10 +180,10 @@ class _TodoGeneratorFormState extends State<TodoGeneratorForm> {
                             value: 'unimportant',
                           ),
                         ],
-                        selected: {widget.importance},
+                        selected: {importance},
                         onSelectionChanged: (selected) {
                           setState(() {
-                            widget.importance = selected.first;
+                            importance = selected.first;
                           });
                         },
                       ),
@@ -185,10 +191,10 @@ class _TodoGeneratorFormState extends State<TodoGeneratorForm> {
                     SizedBox(height: 8),
                     CheckboxListTile(
                       title: Text('Mark as done'),
-                      value: widget.done,
+                      value: done,
                       onChanged: (value) {
                         setState(() {
-                          widget.done = value!;
+                          done = value!;
                         });
                       },
                     ),
@@ -198,7 +204,7 @@ class _TodoGeneratorFormState extends State<TodoGeneratorForm> {
                         onPressed: () {
                           if (_formKey.currentState!.validate()) {
                             setState(() {
-                              widget.saveTodo(widget.title, widget.description);
+                              saveTodo(title: title, description: description, urgency: urgency, importance: importance, dueDate: dueDate, done: done, creationDate: creationDate);
                               Navigator.of(context).pop();
                             });
                           }
