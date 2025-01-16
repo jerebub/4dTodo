@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:four_dimensional_todo/main.dart';
 import 'package:four_dimensional_todo/todo_element.dart';
+import 'package:provider/provider.dart';
 
 class TodoCard extends StatefulWidget {
   final TodoElement todoElement;
@@ -8,83 +10,117 @@ class TodoCard extends StatefulWidget {
 
   @override
   State<TodoCard> createState() => _TodoCardState();
+}
 
-  void onDone() {
-    todoElement.done = !todoElement.done;
+class _TodoCardState extends State<TodoCard> {
+  void onDone(TodoElement todo) async {
+    MyAppState appState = context.read<MyAppState>();
+    todo.markAsDone();
+    await appState.updateTodoElement(todo);
+  }
+
+  void onDelete(TodoElement todo) async {
+    var appState = context.read<MyAppState>();
+    await appState.deleteTodoElement(todo);
   }
 
   void onArchive() {
     //TODO: implement onArchive
   }
 
-  void onDelete() {
-    //TODO: implement onDelete
-  }
-}
-
-class _TodoCardState extends State<TodoCard> {
   @override
   Widget build(BuildContext context) {
     final ThemeData theme = Theme.of(context);
+    var minHeight = 70.0;
     var des = '';
     if (widget.todoElement.description != null) {
       des = widget.todoElement.description!;
     }
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(10),
-        child: Dismissible(
-          key: Key(widget.todoElement.title),
-          onDismissed: (DismissDirection dir) {
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(10),
+      child: Dismissible(
+        key: UniqueKey(),
+        onDismissed: (DismissDirection dir) {
+          setState(() {
+            dir == DismissDirection.endToStart
+                ? onArchive()
+                : onDelete(widget.todoElement);
+          });
+        },
+        background: Container(
+          constraints: BoxConstraints(minHeight: minHeight),
+          color: Colors.red,
+          alignment: Alignment.centerLeft,
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: const Icon(Icons.delete),
+          ),
+        ),
+        secondaryBackground: Container(
+          constraints: BoxConstraints(minHeight: minHeight),
+          color: Colors.green,
+          alignment: Alignment.centerRight,
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: const Icon(Icons.archive_outlined),
+          ),
+        ),
+        child: GestureDetector(
+          onTap: () {
             setState(() {
-              dir == DismissDirection.endToStart
-                  ? widget.onDelete()
-                  : widget.onArchive();
+              onDone(widget.todoElement);
             });
           },
-          background: Container(
-            alignment: Alignment.centerLeft,
-            color: Colors.red,
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: const Icon(Icons.delete),
+          child: Container(
+            constraints: BoxConstraints(minHeight: minHeight),
+            color: theme.colorScheme.inversePrimary,
+            child: Row(
+              spacing: 8,
+              children: [
+                Expanded(
+                  flex: 1,
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: widget.todoElement.getIcon(),
+                  ),
+                ),
+                Expanded(
+                  flex: 5,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Text(
+                        widget.todoElement.title,
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                        overflow: TextOverflow.ellipsis,
+                        softWrap: false,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 8.0),
+                        child: Text(
+                          des,
+                          overflow: TextOverflow.clip,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Expanded(
+                  flex: 1,
+                  child: IconButton(
+                    icon: widget.todoElement.done
+                        ? Icon(Icons.check)
+                        : Icon(Icons.check_box_outline_blank),
+                    onPressed: () {
+                      setState(() {
+                        onDone(widget.todoElement);
+                      });
+                    },
+                  ),
+                ),
+              ],
             ),
-          ),
-          secondaryBackground: Container(
-            alignment: Alignment.centerRight,
-            color: Colors.green,
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: const Icon(Icons.archive_outlined),
-            ),
-          ),
-          child: ListTile(
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(10),
-            ),
-            tileColor: theme.colorScheme.inversePrimary,
-            title: Text(widget.todoElement.title),
-            subtitle: Text(des),
-            leading: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: widget.todoElement.getIcon(),
-            ),
-            trailing: IconButton(
-              icon: widget.todoElement.done
-                  ? Icon(Icons.check)
-                  : Icon(Icons.check_box_outline_blank),
-              onPressed: () {
-                setState(() {
-                  widget.onDone();
-                });
-              },
-            ),
-            onTap: () {
-              setState(() {
-                widget.onDone();
-              });
-            }
           ),
         ),
       ),
