@@ -17,7 +17,7 @@ This method is also known as the Eisenhower Matrix. It can be critized for being
 This app should allow users to do at least the following things:
 - [x] create Todo-Elements with assigned meta-data
 - [x] show Todo-Elements
-- [ ] edit Todo-Elements
+- [x] edit Todo-Elements
 - [x] save Todo-Elements locally
 - [ ] have a page mentioning the used packages and the corresponding licenses
 - [ ] multiple language support
