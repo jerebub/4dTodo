@@ -5,18 +5,33 @@ import 'package:provider/provider.dart';
 
 class TodoCard extends StatefulWidget {
   final TodoElement todoElement;
+  final int state;
 
-  const TodoCard({super.key, required this.todoElement});
+  const TodoCard({super.key, required this.todoElement, this.state=0});
 
   @override
   State<TodoCard> createState() => _TodoCardState();
 }
 
 class _TodoCardState extends State<TodoCard> {
+
+  void _edit(TodoElement todo) {
+    // TODO: Implement editing
+    // showDialog(
+    //   context: context,
+    //   builder: (BuildContext context) => Dialog(
+    //     alignment: Alignment.center,
+    //     child: TodoEditorForm(todoElement: todo),
+    //   ),
+    // );
+  }
+
   void _onDone(TodoElement todo) async {
-    MyAppState appState = context.read<MyAppState>();
-    todo.markAsDone();
-    await appState.updateTodoElement(todo);
+    if (widget.state == 0){
+      MyAppState appState = context.read<MyAppState>();
+      todo.markAsDone();
+      await appState.updateTodoElement(todo);
+    }
   }
 
   void _onDelete(TodoElement todo) async {
@@ -27,7 +42,16 @@ class _TodoCardState extends State<TodoCard> {
   void _onArchive(TodoElement todo) async{
     MyAppState appState = context.read<MyAppState>();
     todo.markAsArchived();
-    await appState.updateTodoElement(todo);
+    if (widget.state == 0) {
+      appState.todoList.remove(todo);
+      appState.archivedTodoList.add(todo);
+      await appState.updateTodoElement(todo);
+    }
+    else {
+      appState.archivedTodoList.remove(todo);
+      appState.todoList.add(todo);
+      await appState.updateTodoElement(todo);
+    }
   }
 
   @override
@@ -60,11 +84,11 @@ class _TodoCardState extends State<TodoCard> {
         ),
         secondaryBackground: Container(
           constraints: BoxConstraints(minHeight: minHeight),
-          color: Colors.green,
+          color: widget.state == 0? Colors.green : Colors.grey,
           alignment: Alignment.centerRight,
           child: Padding(
             padding: const EdgeInsets.all(8.0),
-            child: const Icon(Icons.archive_outlined),
+            child: widget.state == 0? const Icon(Icons.archive_outlined): const Icon(Icons.unarchive_outlined),
           ),
         ),
         child: GestureDetector(
@@ -73,9 +97,14 @@ class _TodoCardState extends State<TodoCard> {
               _onDone(widget.todoElement);
             });
           },
+          onLongPress: () {
+            setState(() {
+              _edit(widget.todoElement);
+            });
+          },
           child: Container(
             constraints: BoxConstraints(minHeight: minHeight),
-            color: theme.colorScheme.inversePrimary,
+            color: widget.todoElement.done? theme.colorScheme.inversePrimary: theme.colorScheme.primary,
             child: Row(
               spacing: 8,
               children: [

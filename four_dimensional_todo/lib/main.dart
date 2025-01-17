@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:four_dimensional_todo/archivePages/archive_view_page.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
@@ -146,7 +147,7 @@ class _MyHomePageState extends State<MyHomePage> {
       case 0:
         page = TodoViewerPage(title: widget.title);
       case 1:
-        page = Placeholder();
+        page = ArchiveViewerPage(title: widget.title);
       case 2:
         page = Placeholder();
       default:
@@ -168,7 +169,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
                   BottomNavigationBarItem(
                     icon: Icon(Icons.history),
-                    label: 'History',
+                    label: 'Archive',
                   ),
                   BottomNavigationBarItem(
                     icon: Icon(Icons.settings),
@@ -211,7 +212,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         label: Text('Home'),
                       ),
                       NavigationRailDestination(
-                          icon: Icon(Icons.history), label: Text('History')),
+                          icon: Icon(Icons.history), label: Text('Archive')),
                       NavigationRailDestination(
                         icon: Icon(Icons.settings),
                         label: Text('Settings'),
