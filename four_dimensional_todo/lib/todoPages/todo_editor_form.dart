@@ -5,59 +5,88 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 // ignore: must_be_immutable
-class TodoGeneratorForm extends StatefulWidget {
-  const TodoGeneratorForm({super.key});
+class TodoEditorForm extends StatefulWidget {
+  TodoElement todoElement;
+  int state;
+  TodoEditorForm({super.key, required this.todoElement, this.state = 0});
 
   @override
-  State<TodoGeneratorForm> createState() => _TodoGeneratorFormState();
+  State<TodoEditorForm> createState() => _TodoEditorFormState();
 }
 
-class _TodoGeneratorFormState extends State<TodoGeneratorForm> {
+class _TodoEditorFormState extends State<TodoEditorForm> {
   final _formKey = GlobalKey<FormState>();
-
-  // ignore: prefer_typing_uninitialized_variables
-  var dueDate;
-  var dateFormat = DateFormat('dd/MM/yyyy');
-  var creationDate = DateTime.now();
+  final dateFormat = DateFormat('dd/MM/yyyy');
   var urgency = 'urgent';
   var importance = 'important';
-  var done = false;
-  // ignore: prefer_typing_uninitialized_variables
-  var title;
-  // ignore: prefer_typing_uninitialized_variables
-  var description;
+  DateTime? dueDate = DateTime.now();
+  DateTime creationDate = DateTime.now();
+  bool done = false;
+  String title = '';
+  String? description = '';
+  bool archived = true;
 
-  void saveTodo({required String title, String? description, required String urgency, required String importance, DateTime? dueDate, bool done=false, DateTime? creationDate}) {
-    creationDate ??= DateTime.now();
+  @override
+  void initState() {
+    super.initState();
+    urgency = widget.todoElement.getUrgency();
+    importance = widget.todoElement.getImportance();
+    dueDate = widget.todoElement.getDueDate();
+    creationDate = widget.todoElement.creationDate;
+    done = widget.todoElement.done;
+    title = widget.todoElement.title;
+    description = widget.todoElement.getDescription();
+    archived = widget.todoElement.archived;
+  }
+
+  void editTodo(
+      {required String title,
+      String? description,
+      required String urgency,
+      required String importance,
+      DateTime? dueDate,
+      bool done = false,
+      required DateTime creationDate}) {
     var appState = context.read<MyAppState>();
-    //determine the eisenhower matrix category
-    var eisenhowerMatrixCategory = EisenhowerMatrixCategory.urgentImportant;
+
+    widget.todoElement.title = title;
+    widget.todoElement.description = description;
+    widget.todoElement.done = done;
+    widget.todoElement.dueDate = dueDate;
+    widget.todoElement.creationDate = creationDate;
+
     if (urgency == 'urgent' && importance == 'important') {
-      eisenhowerMatrixCategory = EisenhowerMatrixCategory.urgentImportant;
+      widget.todoElement.eisenhowerMatrixCategory =
+          EisenhowerMatrixCategory.urgentImportant;
     } else if (urgency == 'urgent' && importance == 'unimportant') {
-      eisenhowerMatrixCategory = EisenhowerMatrixCategory.urgentNotImportant;
+      widget.todoElement.eisenhowerMatrixCategory =
+          EisenhowerMatrixCategory.urgentNotImportant;
     } else if (urgency == 'notUrgent' && importance == 'important') {
-      eisenhowerMatrixCategory = EisenhowerMatrixCategory.notUrgentImportant;
+      widget.todoElement.eisenhowerMatrixCategory =
+          EisenhowerMatrixCategory.notUrgentImportant;
     } else if (urgency == 'notUrgent' && importance == 'unimportant') {
-      eisenhowerMatrixCategory = EisenhowerMatrixCategory.notUrgentNotImportant;
+      widget.todoElement.eisenhowerMatrixCategory =
+          EisenhowerMatrixCategory.notUrgentNotImportant;
     }
-    var newTodo = TodoElement(
-      title: title,
-      description: description,
-      done: done,
-      eisenhowerMatrixCategory: eisenhowerMatrixCategory,
-      dueDate: dueDate,
-      creationDate: creationDate,
-    );
-    // adding todo to todoList
-    appState.addTodoElement(newTodo);
+
+    appState.updateTodoElement(todoElement: widget.todoElement);
+    if (widget.state != 0 && archived != widget.todoElement.archived) {
+      widget.todoElement.markAsArchived();
+      if (archived) {
+        appState.todoList.remove(widget.todoElement);
+        appState.archivedTodoList.add(widget.todoElement);
+      } else {
+        appState.archivedTodoList.remove(widget.todoElement);
+        appState.todoList.add(widget.todoElement);
+      }
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     var dueDateString = 'No due date';
     if (dueDate != null) {
-      dueDateString = dateFormat.format(dueDate);
+      dueDateString = dateFormat.format(dueDate!);
     }
     var creationDateString = dateFormat.format(creationDate);
     return LayoutBuilder(builder: (context, constraints) {
@@ -133,8 +162,7 @@ class _TodoGeneratorFormState extends State<TodoGeneratorForm> {
                             if (newDate == null) return;
                             setState(() {
                               creationDate = newDate;
-                              creationDateString =
-                                  dateFormat.format(newDate);
+                              creationDateString = dateFormat.format(newDate);
                             });
                           },
                           child: Text(creationDateString),
@@ -195,18 +223,36 @@ class _TodoGeneratorFormState extends State<TodoGeneratorForm> {
                         });
                       },
                     ),
+                    widget.state == 0
+                      ? Container()
+                      : CheckboxListTile(
+                          title: Text('Archive'),
+                          value: archived,
+                          onChanged: (value) {
+                            setState(() {
+                              archived = value!;
+                            });
+                          },
+                      ),
                     SizedBox(height: 8),
                     Center(
                       child: ElevatedButton(
                         onPressed: () {
                           if (_formKey.currentState!.validate()) {
                             setState(() {
-                              saveTodo(title: title, description: description, urgency: urgency, importance: importance, dueDate: dueDate, done: done, creationDate: creationDate);
+                              editTodo(
+                                  creationDate: creationDate,
+                                  description: description,
+                                  done: done,
+                                  dueDate: dueDate,
+                                  importance: importance,
+                                  title: title,
+                                  urgency: urgency);
                               Navigator.of(context).pop();
                             });
                           }
                         },
-                        child: const Text('Submit'),
+                        child: const Text('Edit'),
                       ),
                     ),
                   ],

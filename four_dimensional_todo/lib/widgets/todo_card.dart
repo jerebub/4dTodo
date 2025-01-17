@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:four_dimensional_todo/main.dart';
+import 'package:four_dimensional_todo/todoPages/todo_editor_form.dart';
 import 'package:four_dimensional_todo/todo_element.dart';
 import 'package:provider/provider.dart';
 
@@ -16,21 +17,20 @@ class TodoCard extends StatefulWidget {
 class _TodoCardState extends State<TodoCard> {
 
   void _edit(TodoElement todo) {
-    // TODO: Implement editing
-    // showDialog(
-    //   context: context,
-    //   builder: (BuildContext context) => Dialog(
-    //     alignment: Alignment.center,
-    //     child: TodoEditorForm(todoElement: todo),
-    //   ),
-    // );
+    showDialog(
+      context: context,
+      builder: (BuildContext context) => Dialog(
+        alignment: Alignment.center,
+        child: TodoEditorForm(todoElement: todo, state: widget.state),
+      ),
+    );
   }
 
   void _onDone(TodoElement todo) async {
     if (widget.state == 0){
       MyAppState appState = context.read<MyAppState>();
       todo.markAsDone();
-      await appState.updateTodoElement(todo);
+      await appState.updateTodoElement(todoElement: todo);
     }
   }
 
@@ -45,12 +45,12 @@ class _TodoCardState extends State<TodoCard> {
     if (widget.state == 0) {
       appState.todoList.remove(todo);
       appState.archivedTodoList.add(todo);
-      await appState.updateTodoElement(todo);
+      await appState.updateTodoElement(todoElement: todo);
     }
     else {
       appState.archivedTodoList.remove(todo);
       appState.todoList.add(todo);
-      await appState.updateTodoElement(todo);
+      await appState.updateTodoElement(todoElement: todo);
     }
   }
 

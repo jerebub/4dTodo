@@ -41,6 +41,28 @@ class TodoElement {
     }
   }
 
+  String getUrgency() {
+    if (eisenhowerMatrixCategory == EisenhowerMatrixCategory.urgentImportant || eisenhowerMatrixCategory == EisenhowerMatrixCategory.urgentNotImportant) {
+      return 'urgent';
+    }
+    return 'notUrgent';
+  }
+
+  String getImportance() {
+    if (eisenhowerMatrixCategory == EisenhowerMatrixCategory.urgentImportant || eisenhowerMatrixCategory == EisenhowerMatrixCategory.notUrgentImportant) {
+      return 'important';
+    }
+    return 'unimportant';
+  }
+
+  DateTime? getDueDate(){
+    return dueDate;
+  }
+
+  String? getDescription(){
+    return description;
+  }
+
   String categoryToString(){
     switch (eisenhowerMatrixCategory) {
       case EisenhowerMatrixCategory.urgentImportant:

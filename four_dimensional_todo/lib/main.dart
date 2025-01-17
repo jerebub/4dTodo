@@ -101,7 +101,7 @@ class MyAppState extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> updateTodoElement(TodoElement todoElement) async {
+  Future<void> updateTodoElement({required TodoElement todoElement}) async {
     final database =
         openDatabase(join(await getDatabasesPath(), 'todo_database.db'));
     final db = await database;
