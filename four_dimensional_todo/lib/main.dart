@@ -155,11 +155,11 @@ class _MyHomePageState extends State<MyHomePage> {
     }
     return LayoutBuilder(builder: (context, constraints) {
       if (constraints.maxWidth < 400) {
-        return Column(
-          children: [
-            Expanded(child: page),
-            SafeArea(
-              child: BottomNavigationBar(
+        return SafeArea(
+          child: Column(
+            children: [
+              Expanded(child: page),
+              BottomNavigationBar(
                 showSelectedLabels: constraints.maxWidth > 300,
                 showUnselectedLabels: constraints.maxWidth > 300,
                 items: [
@@ -183,8 +183,8 @@ class _MyHomePageState extends State<MyHomePage> {
                   });
                 },
               ),
-            ),
-          ],
+            ],
+          ),
         );
       }
       var style = (constraints.maxWidth > 600)

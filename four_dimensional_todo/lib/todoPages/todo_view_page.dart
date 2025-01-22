@@ -54,16 +54,14 @@ class _TodoViewerPageState extends State<TodoViewerPage> {
       );
     }
     return Scaffold(
-      body: Center(
-        child: ListView.separated(
-          itemCount: todoList.length,
-          padding: const EdgeInsets.all(8),
-          itemBuilder: (context, index) {
-            return TodoCard(todoElement: todoList[index]);
-          },
-          separatorBuilder: (BuildContext context, int index) =>
-              Container(padding: EdgeInsets.all(8.0)),
-        ),
+      body: ListView.separated(
+        itemCount: todoList.length,
+        padding: const EdgeInsets.all(8),
+        itemBuilder: (context, index) {
+          return TodoCard(todoElement: todoList[index]);
+        },
+        separatorBuilder: (BuildContext context, int index) =>
+            Container(padding: EdgeInsets.all(8.0)),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () => _createNewTodo(),

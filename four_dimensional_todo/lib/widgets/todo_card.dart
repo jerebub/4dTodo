@@ -104,7 +104,7 @@ class _TodoCardState extends State<TodoCard> {
           },
           child: Container(
             constraints: BoxConstraints(minHeight: minHeight),
-            color: widget.todoElement.done? theme.colorScheme.inversePrimary: theme.colorScheme.primary,
+            color: widget.todoElement.done? theme.colorScheme.primary: theme.colorScheme.inversePrimary,
             child: Row(
               spacing: 8,
               children: [
