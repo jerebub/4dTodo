@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../main.dart';
 import '../widgets/todo_card.dart';
 
 class ArchiveViewerPage extends StatefulWidget {
-  const ArchiveViewerPage({super.key, required this.title});
+  const ArchiveViewerPage({super.key,});
 
-  final String title;
 
   @override
   State<ArchiveViewerPage> createState() => _ArchiveViewerPageState();
@@ -33,7 +33,7 @@ class _ArchiveViewerPageState extends State<ArchiveViewerPage> {
     if (archivedList.isEmpty) {
       return Scaffold(
         body: Center(
-          child: Text('Nothing archived yet'),
+          child: Text(AppLocalizations.of(context)!.nothingArchivedYet),
         ),
       );
     }

@@ -2,10 +2,12 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:four_dimensional_todo/archivePages/archive_view_page.dart';
 import 'package:four_dimensional_todo/settingPages/setting_view_page.dart';
 import 'package:path/path.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import 'package:provider/provider.dart';
 import 'todoPages/todo_view_page.dart';
@@ -35,12 +37,21 @@ class MyApp extends StatelessWidget {
     return ChangeNotifierProvider(
       create: (BuildContext context) => MyAppState(),
       child: MaterialApp(
-        title: '4D TODO',
-        theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-          useMaterial3: true,
+        localizationsDelegates: AppLocalizations.localizationsDelegates,
+        supportedLocales: AppLocalizations.supportedLocales,
+        onGenerateTitle:(context) => AppLocalizations.of(context)!.appTitle,
+        theme: ThemeData.light(),
+        darkTheme: ThemeData.dark(),
+        themeMode: ThemeMode.system,
+        // theme: ThemeData(
+        //   colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        //   useMaterial3: true,
+        // ),
+        home: Builder(
+          builder: (context) {
+            return MyHomePage(title: AppLocalizations.of(context)!.appTitle);
+          }
         ),
-        home: const MyHomePage(title: '4D TODO'),
       ),
     );
   }
@@ -145,13 +156,13 @@ class _MyHomePageState extends State<MyHomePage> {
     Widget page;
     switch (selectedIndex) {
       case 0:
-        page = TodoViewerPage(title: widget.title);
+        page = TodoViewerPage();
       case 1:
-        page = ArchiveViewerPage(title: widget.title);
+        page = ArchiveViewerPage();
       case 2:
-        page = SettingsViewerPage(title: widget.title);
+        page = SettingsViewerPage();
       default:
-        throw UnimplementedError('no widget for index $selectedIndex');
+        throw UnimplementedError(AppLocalizations.of(context)!.noWidgetForIndex(selectedIndex));
     }
     return LayoutBuilder(builder: (context, constraints) {
       if (constraints.maxWidth < 400) {
@@ -165,15 +176,15 @@ class _MyHomePageState extends State<MyHomePage> {
                 items: [
                   BottomNavigationBarItem(
                     icon: Icon(Icons.home),
-                    label: 'Home',
+                    label: AppLocalizations.of(context)!.home,
                   ),
                   BottomNavigationBarItem(
                     icon: Icon(Icons.history),
-                    label: 'Archive',
+                    label: AppLocalizations.of(context)!.archiveNoun,
                   ),
                   BottomNavigationBarItem(
                     icon: Icon(Icons.settings),
-                    label: 'Settings',
+                    label: AppLocalizations.of(context)!.settings,
                   ),
                 ],
                 currentIndex: selectedIndex,
@@ -209,13 +220,13 @@ class _MyHomePageState extends State<MyHomePage> {
                     destinations: [
                       NavigationRailDestination(
                         icon: Icon(Icons.home),
-                        label: Text('Home'),
+                        label: Text(AppLocalizations.of(context)!.home),
                       ),
                       NavigationRailDestination(
-                          icon: Icon(Icons.history), label: Text('Archive')),
+                          icon: Icon(Icons.history), label: Text(AppLocalizations.of(context)!.archiveNoun)),
                       NavigationRailDestination(
                         icon: Icon(Icons.settings),
-                        label: Text('Settings'),
+                        label: Text(AppLocalizations.of(context)!.settings),
                       ),
                     ],
                     selectedIndex: selectedIndex,

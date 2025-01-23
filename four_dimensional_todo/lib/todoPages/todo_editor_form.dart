@@ -3,6 +3,7 @@ import 'package:four_dimensional_todo/main.dart';
 import 'package:four_dimensional_todo/todo_element.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 // ignore: must_be_immutable
 class TodoEditorForm extends StatefulWidget {
@@ -84,7 +85,7 @@ class _TodoEditorFormState extends State<TodoEditorForm> {
 
   @override
   Widget build(BuildContext context) {
-    var dueDateString = 'No due date';
+    var dueDateString = AppLocalizations.of(context)!.noDueDate;
     if (dueDate != null) {
       dueDateString = dateFormat.format(dueDate!);
     }
@@ -103,13 +104,13 @@ class _TodoEditorFormState extends State<TodoEditorForm> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     TextFormField(
-                      decoration: const InputDecoration(labelText: 'Title'),
+                      decoration: InputDecoration(labelText: AppLocalizations.of(context)!.title),
                       autofocus: true,
                       initialValue: title,
                       onChanged: (value) => title = value,
                       validator: (value) {
                         if (value == null || value.isEmpty) {
-                          return 'Please enter a title';
+                          return AppLocalizations.of(context)!.enterATitle;
                         }
                         return null;
                       },
@@ -117,7 +118,7 @@ class _TodoEditorFormState extends State<TodoEditorForm> {
                     SizedBox(height: 8),
                     TextFormField(
                       decoration:
-                          const InputDecoration(labelText: 'Description'),
+                          InputDecoration(labelText: AppLocalizations.of(context)!.description),
                       maxLines: null,
                       initialValue: description,
                       onChanged: (value) => description = value,
@@ -128,7 +129,7 @@ class _TodoEditorFormState extends State<TodoEditorForm> {
                     SizedBox(height: 8),
                     Row(
                       children: [
-                        const Text('Due Date: '),
+                        Text(AppLocalizations.of(context)!.dueDate),
                         TextButton(
                           onPressed: () async {
                             var newDate = await showDatePicker(
@@ -150,7 +151,7 @@ class _TodoEditorFormState extends State<TodoEditorForm> {
                     SizedBox(height: 8),
                     Row(
                       children: [
-                        const Text('Creation Date: '),
+                        Text(AppLocalizations.of(context)!.creationDateCol),
                         TextButton(
                           onPressed: () async {
                             var newDate = await showDatePicker(
@@ -173,13 +174,13 @@ class _TodoEditorFormState extends State<TodoEditorForm> {
                     Center(
                       child: SegmentedButton(
                         showSelectedIcon: false,
-                        segments: const <ButtonSegment>[
+                        segments: <ButtonSegment>[
                           ButtonSegment(
-                            label: Text('Urgent'),
+                            label: Text(AppLocalizations.of(context)!.urgent),
                             value: 'urgent',
                           ),
                           ButtonSegment(
-                            label: Text('Not Urgent'),
+                            label: Text(AppLocalizations.of(context)!.notUrgent),
                             value: 'notUrgent',
                           ),
                         ],
@@ -195,13 +196,13 @@ class _TodoEditorFormState extends State<TodoEditorForm> {
                     Center(
                       child: SegmentedButton(
                         showSelectedIcon: false,
-                        segments: const <ButtonSegment>[
+                        segments: <ButtonSegment>[
                           ButtonSegment(
-                            label: Text('Important'),
+                            label: Text(AppLocalizations.of(context)!.important),
                             value: 'important',
                           ),
                           ButtonSegment(
-                            label: Text('Unimportant'),
+                            label: Text(AppLocalizations.of(context)!.unimportant),
                             value: 'unimportant',
                           ),
                         ],
@@ -215,7 +216,7 @@ class _TodoEditorFormState extends State<TodoEditorForm> {
                     ),
                     SizedBox(height: 8),
                     CheckboxListTile(
-                      title: Text('Mark as done'),
+                      title: Text(AppLocalizations.of(context)!.markAsDone),
                       value: done,
                       onChanged: (value) {
                         setState(() {
@@ -226,7 +227,7 @@ class _TodoEditorFormState extends State<TodoEditorForm> {
                     widget.state == 0
                       ? Container()
                       : CheckboxListTile(
-                          title: Text('Archive'),
+                          title: Text(AppLocalizations.of(context)!.archiveVerb),
                           value: archived,
                           onChanged: (value) {
                             setState(() {
@@ -252,7 +253,7 @@ class _TodoEditorFormState extends State<TodoEditorForm> {
                             });
                           }
                         },
-                        child: const Text('Edit'),
+                        child: Text(AppLocalizations.of(context)!.edit),
                       ),
                     ),
                   ],

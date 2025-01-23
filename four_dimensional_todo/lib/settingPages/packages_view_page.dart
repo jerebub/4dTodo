@@ -1,35 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class PackagesViewerPage extends StatelessWidget {
-  const PackagesViewerPage({super.key, required this.title});
+  const PackagesViewerPage({super.key});
 
-  final String title;
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: ListView.builder(
-        itemCount: packageItemList.length,
-        itemBuilder: (BuildContext context, int index) =>
-            _PackageEntryItem(packageItemList[index]),
-      ),
-    );
-  }
-}
-
-class PackageEntry {
-  const PackageEntry(
-      {required this.title, required this.version, this.text, this.child});
-  final String title;
-  final String? version;
-  final String? text;
-  final PackageEntry? child;
-}
-
-const List<PackageEntry> packageItemList = <PackageEntry>[
+    List<PackageEntry> packageItemList = <PackageEntry>[
   PackageEntry(
     title:
-        'The following list shows the used packages, their versions and licenses.',
+        AppLocalizations.of(context)!.packageViewDescriptor,
     version: null,
   ),
   PackageEntry(
@@ -134,7 +115,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.''',
   ),
   PackageEntry(
     title: 'intl',
-    version: '0.20.1',
+    version: '0.19.0',
     child: PackageEntry(
       title: 'BSD-3-Clause',
       version: null,
@@ -360,6 +341,26 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.''',
   ),
 ];
 
+
+    return Scaffold(
+      body: ListView.builder(
+        itemCount: packageItemList.length,
+        itemBuilder: (BuildContext context, int index) =>
+            _PackageEntryItem(packageItemList[index]),
+      ),
+    );
+  }
+}
+
+class PackageEntry {
+  const PackageEntry(
+      {required this.title, required this.version, this.text, this.child});
+  final String title;
+  final String? version;
+  final String? text;
+  final PackageEntry? child;
+}
+
 class _PackageEntryItem extends StatelessWidget {
   const _PackageEntryItem(this.entry);
 
@@ -372,7 +373,7 @@ class _PackageEntryItem extends StatelessWidget {
     return ExpansionTile(
       key: PageStorageKey<PackageEntry>(root),
       title: Text(root.title),
-      subtitle: root.version != null ? Text('version: ${root.version}'): null,
+      subtitle: root.version != null ? Text('Version: ${root.version}'): null,
       children: (root.text != null)
           ? [
               Padding(

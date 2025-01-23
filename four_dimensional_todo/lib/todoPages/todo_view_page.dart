@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:four_dimensional_todo/todoPages/todo_generator_form.dart';
 import 'package:provider/provider.dart';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../main.dart';
 import '../widgets/todo_card.dart';
 
 class TodoViewerPage extends StatefulWidget {
-  const TodoViewerPage({super.key, required this.title});
+  const TodoViewerPage({super.key,});
 
-  final String title;
 
   @override
   State<TodoViewerPage> createState() => _TodoViewerPageState();
@@ -44,11 +43,11 @@ class _TodoViewerPageState extends State<TodoViewerPage> {
     if (todoList.isEmpty) {
       return Scaffold(
         body: Center(
-          child: Text('No TODOs yet'),
+          child: Text(AppLocalizations.of(context)!.noTodosYet),
         ),
         floatingActionButton: FloatingActionButton(
           onPressed: () => _createNewTodo(),
-          tooltip: 'New TODO',
+          tooltip: AppLocalizations.of(context)!.newTodo,
           child: const Icon(Icons.add),
         ),
       );
@@ -65,7 +64,7 @@ class _TodoViewerPageState extends State<TodoViewerPage> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () => _createNewTodo(),
-        tooltip: 'New TODO',
+        tooltip: AppLocalizations.of(context)!.newTodo,
         child: const Icon(Icons.add),
       ),
     );

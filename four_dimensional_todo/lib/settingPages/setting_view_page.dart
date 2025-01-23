@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:four_dimensional_todo/settingPages/about_view_page.dart';
 import 'package:four_dimensional_todo/settingPages/packages_view_page.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class SettingsViewerPage extends StatefulWidget {
-  const SettingsViewerPage({super.key, required this.title});
+  const SettingsViewerPage({super.key,});
 
-  final String title;
 
   @override
   State<SettingsViewerPage> createState() => _SettingsViewerPageState();
@@ -14,7 +14,7 @@ class SettingsViewerPage extends StatefulWidget {
 class _SettingsViewerPageState extends State<SettingsViewerPage> {
   var selectedIndex = 0;
   static const List<Widget> pages = [
-    PackagesViewerPage(title: 'Packages'),
+    PackagesViewerPage(),
     Placeholder(), //LanguageViewerPage(title: 'Language'),
     AboutViewerPage(),
   ];
@@ -38,13 +38,13 @@ class _SettingsViewerPageState extends State<SettingsViewerPage> {
           body: ListView(
             children: [
               ListTile(
-                title: Text('Settings',
+                title: Text(AppLocalizations.of(context)!.settings,
                     softWrap: false,
                     style: Theme.of(context).textTheme.titleMedium),
               ),
               ExpansionTile(
                 title: Text(
-                  'Licenses',
+                  AppLocalizations.of(context)!.licenses,
                   softWrap: false,
                 ),
                 children: [
@@ -59,7 +59,7 @@ class _SettingsViewerPageState extends State<SettingsViewerPage> {
               ),
               ExpansionTile(
                 title: Text(
-                  'Language',
+                  AppLocalizations.of(context)!.language,
                   softWrap: false,
                 ),
                 children: [
@@ -74,7 +74,7 @@ class _SettingsViewerPageState extends State<SettingsViewerPage> {
               ),
               ExpansionTile(
                 title: Text(
-                  'About',
+                  AppLocalizations.of(context)!.about,
                   softWrap: false,
                 ),
                 children: [
@@ -107,13 +107,13 @@ class _SettingsViewerPageState extends State<SettingsViewerPage> {
               child: ListView(
                 children: [
                   ListTile(
-                    title: Text('Settings',
+                    title: Text(AppLocalizations.of(context)!.settings,
                         softWrap: false,
                         style: Theme.of(context).textTheme.titleMedium),
                   ),
                   ListTile(
                     title: Text(
-                      'Licenses',
+                      AppLocalizations.of(context)!.licenses,
                       softWrap: false,
                       style: selectedIndex == 0 ? selectedStyle : null,
                     ),
@@ -125,7 +125,7 @@ class _SettingsViewerPageState extends State<SettingsViewerPage> {
                   ),
                   ListTile(
                     title: Text(
-                      'Language',
+                      AppLocalizations.of(context)!.language,
                       softWrap: false,
                       style: selectedIndex == 1 ? selectedStyle : null,
                     ),
@@ -137,7 +137,7 @@ class _SettingsViewerPageState extends State<SettingsViewerPage> {
                   ),
                   ListTile(
                     title: Text(
-                      'About',
+                      AppLocalizations.of(context)!.about,
                       softWrap: false,
                       style: selectedIndex == 2 ? selectedStyle : null,
                     ),
