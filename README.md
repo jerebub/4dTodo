@@ -19,7 +19,7 @@ This app should allow users to do at least the following things:
 - [x] show Todo-Elements
 - [x] edit Todo-Elements
 - [x] save Todo-Elements locally
-- [ ] have a page mentioning the used packages and the corresponding licenses
+- [x] have a page mentioning the used packages and the corresponding licenses
 - [ ] multiple language support
 
 ## possible features
@@ -28,7 +28,7 @@ additionally some features should be implemented
 - [ ] reminder-notifications
 - [ ] predefined color-themes
 - [ ] responsive design
-- [ ] auto-generation of repeted tasks
+- [ ] auto-generation of repeated tasks
 - [ ] initial popup for first time users explaining the method
 - [ ] export and import of tasks
 - [ ] location-dependent reminders
@@ -37,7 +37,9 @@ additionally some features should be implemented
 
 ## used packages
 - [intl](https://pub.dev/packages/intl)
+- [path](https://pub.dev/packages/path)
 - [provider](https://pub.dev/packages/provider)
 - [sqflite](https://pub.dev/packages/sqflite)
 - [sqflite_common_ffi](https://pub.dev/packages/sqflite_common_ffi)
 - [sqlite3_flutter_libs](https://pub.dev/packages/sqlite3_flutter_libs)
+- [url_launcher](https://pub.dev/packages/url_launcher)

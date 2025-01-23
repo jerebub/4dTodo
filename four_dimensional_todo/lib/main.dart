@@ -3,8 +3,8 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:four_dimensional_todo/archivePages/archive_view_page.dart';
+import 'package:four_dimensional_todo/settingPages/setting_view_page.dart';
 import 'package:path/path.dart';
-import 'package:sqflite/sqflite.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 
 import 'package:provider/provider.dart';
@@ -149,7 +149,7 @@ class _MyHomePageState extends State<MyHomePage> {
       case 1:
         page = ArchiveViewerPage(title: widget.title);
       case 2:
-        page = Placeholder();
+        page = SettingsViewerPage(title: widget.title);
       default:
         throw UnimplementedError('no widget for index $selectedIndex');
     }
