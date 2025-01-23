@@ -18,9 +18,20 @@ class _SettingsViewerPageState extends State<SettingsViewerPage> {
     Placeholder(), //LanguageViewerPage(title: 'Language'),
     AboutViewerPage(),
   ];
+  
 
   @override
   Widget build(BuildContext context) {
+    TextStyle selectedStyle = TextStyle(
+    color: Colors.black,
+    shadows: [
+      Shadow(
+        color: Theme.of(context).colorScheme.primary,
+        offset: Offset(0, 0),
+        blurRadius: 5,
+      ),
+    ],
+  );
     return LayoutBuilder(builder: (context, constraints) {
       if (constraints.maxWidth < 400) {
         return Scaffold(
@@ -104,6 +115,7 @@ class _SettingsViewerPageState extends State<SettingsViewerPage> {
                     title: Text(
                       'Licenses',
                       softWrap: false,
+                      style: selectedIndex == 0 ? selectedStyle : null,
                     ),
                     onTap: () {
                       setState(() {
@@ -115,6 +127,7 @@ class _SettingsViewerPageState extends State<SettingsViewerPage> {
                     title: Text(
                       'Language',
                       softWrap: false,
+                      style: selectedIndex == 1 ? selectedStyle : null,
                     ),
                     onTap: () {
                       setState(() {
@@ -126,6 +139,7 @@ class _SettingsViewerPageState extends State<SettingsViewerPage> {
                     title: Text(
                       'About',
                       softWrap: false,
+                      style: selectedIndex == 2 ? selectedStyle : null,
                     ),
                     onTap: () {
                       setState(() {
