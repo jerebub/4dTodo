@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:four_dimensional_todo/archivePages/archive_view_page.dart';
 import 'package:four_dimensional_todo/settingPages/setting_view_page.dart';
 import 'package:path/path.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -27,27 +28,26 @@ void main() async {
       'CREATE TABLE todos(id INTEGER PRIMARY KEY, title TEXT, description TEXT, done INTEGER, archived INTEGER, creationDate TEXT, dueDate TEXT, eisenhowerMatrixCategory TEXT)',
     );
   }, version: 1);
-  runApp(const MyApp());
+  final SharedPreferences prefs = await SharedPreferences.getInstance();
+  runApp( MyApp(preferences: prefs,));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
+  const MyApp({super.key, required this.preferences});
+  final SharedPreferences preferences;
   @override
   Widget build(BuildContext context) {
+    String? local = preferences.getString('local');
     return ChangeNotifierProvider(
-      create: (BuildContext context) => MyAppState(),
+      create: (BuildContext context) => MyAppState(prefs: preferences),
       child: MaterialApp(
         localizationsDelegates: AppLocalizations.localizationsDelegates,
         supportedLocales: AppLocalizations.supportedLocales,
+        locale: local != null && local != 'default' ? Locale(local) : null,
         onGenerateTitle:(context) => AppLocalizations.of(context)!.appTitle,
         theme: ThemeData.light(),
         darkTheme: ThemeData.dark(),
         themeMode: ThemeMode.system,
-        // theme: ThemeData(
-        //   colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        //   useMaterial3: true,
-        // ),
         home: Builder(
           builder: (context) {
             return MyHomePage(title: AppLocalizations.of(context)!.appTitle);
@@ -62,6 +62,9 @@ class MyAppState extends ChangeNotifier {
   // write stuff in here needed for the general businesslogic of the app
   var todoList = <TodoElement>[];
   var archivedTodoList = <TodoElement>[];
+  final SharedPreferences prefs;
+
+  MyAppState({required this.prefs});
 
   TodoElement getTodoElementFromMap(Map map) {
     return TodoElement(

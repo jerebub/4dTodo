@@ -148,5 +148,9 @@
     "german": "Deutsch (de)",
     "@german": {
         "description": "Deutsche Sprache auswählen"
+    },
+    "restartAppToast": "Bitte starte die App neu, um die Änderungen zu übernehmen",
+    "@restartAppToast": {
+        "description": "Text, der angezeigt wird, wenn die App neu gestartet werden muss."
     }
 }

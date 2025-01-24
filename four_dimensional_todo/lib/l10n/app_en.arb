@@ -148,5 +148,9 @@
     "german": "German (de)",
     "@german": {
         "description": "Name of the German language"
+    },
+    "restartAppToast": "Please restart the app to apply the changes",
+    "@restartAppToast": {
+        "description": "Text that is shown as a toast message when the user changes the language"
     }
 }

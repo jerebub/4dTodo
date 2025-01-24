@@ -14,7 +14,7 @@ class SettingsViewerPage extends StatefulWidget {
 
 class _SettingsViewerPageState extends State<SettingsViewerPage> {
   var selectedIndex = 0;
-  static const List<Widget> pages = [
+  static List<Widget> pages = [
     PackagesViewerPage(),
     LanguageViewerPage(), //LanguageViewerPage(title: 'Language'),
     AboutViewerPage(),
@@ -24,12 +24,11 @@ class _SettingsViewerPageState extends State<SettingsViewerPage> {
   @override
   Widget build(BuildContext context) {
     TextStyle selectedStyle = TextStyle(
-    color: Colors.black,
     shadows: [
       Shadow(
         color: Theme.of(context).colorScheme.primary,
         offset: Offset(0, 0),
-        blurRadius: 5,
+        blurRadius: 10,
       ),
     ],
   );
