@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
+// import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:four_dimensional_todo/archivePages/archive_view_page.dart';
 import 'package:four_dimensional_todo/settingPages/setting_view_page.dart';
 import 'package:path/path.dart';
@@ -19,6 +19,7 @@ void main() async {
     databaseFactory = databaseFactoryFfi;
   }
   WidgetsFlutterBinding.ensureInitialized();
+  // ignore: unused_local_variable
   final database =
       openDatabase(join(await getDatabasesPath(), 'todo_database.db'),
           onCreate: (db, version) {

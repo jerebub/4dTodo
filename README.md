@@ -39,6 +39,7 @@ additionally some features should be implemented
 - [intl](https://pub.dev/packages/intl)
 - [path](https://pub.dev/packages/path)
 - [provider](https://pub.dev/packages/provider)
+- [shared_preferences](https://pub.dev/packages/shared_preferences)
 - [sqflite](https://pub.dev/packages/sqflite)
 - [sqflite_common_ffi](https://pub.dev/packages/sqflite_common_ffi)
 - [sqlite3_flutter_libs](https://pub.dev/packages/sqlite3_flutter_libs)

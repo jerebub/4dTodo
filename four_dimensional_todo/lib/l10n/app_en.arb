@@ -1,35 +1,152 @@
 {
+    "@@locale": "en",
     "nothingArchivedYet": "Nothing archived yet",
-    "about1": "This is a simple TODO app that I (Jeremias Bub) made using Flutter.\n\nIt is based on the idea of four-dimensional time-management and uses the four categories of the ",
+    "@nothingArchivedYet": {
+        "description": "Text that is shown when the archive is empty"
+    },
+    "about1": "This is a simple TODO app that I (Jeremias Bub) made using Flutter.\n\nIt is based on the idea of four-dimensional time-management and uses the four categories of the",
+    "@about1": {
+        "description": "Text that is shown on the about page. Presenting the idea of the app"
+    },
     "eisenhowerMatrix": "Eisenhower Matrix",
+    "@eisenhowerMatrix": {
+        "description": "Name of the Eisenhower Matrix"
+    },
     "eisenhowerMatrixWiki": "https://en.wikipedia.org/wiki/Time_management#The_Eisenhower_Method",
-    "about2": ".\nThis app is an ongoing project and I will add more features in the future.\n\nYou can find the source code on GitHub:",
-    "about3": "\n\nThis app is using the ",
+    "@eisenhowerMatrixWiki": {
+        "description": "Link to the Wikipedia page of the Eisenhower Matrix"
+    },
+    "about2": ".\nThis app is an ongoing project and I will add more features in the future.\n\nYou can find the source code on GitHub: ",
+    "@about2": {
+        "description": "Text that is shown on the about page. Presenting the source code of the app"
+    },
+    "about3": "\n\nThis app is using the",
+    "@about3": {
+        "description": "Text that is shown on the about page. Presenting the used license"
+    },
     "unlicenseLicense": "unlicense license",
+    "@unlicenseLicense": {
+        "description": "Name of the unlicense license"
+    },
     "about4": ". Feel free to use the code for your own projects.",
+    "@about4": {
+        "description": "Text that is shown on the about page. Free to use code"
+    },
     "packageViewDescriptor": "The following list shows the used packages, their versions and licenses.",
+    "@packageViewDescriptor": {
+        "description": "Text that is shown on the licenses page. Describing the list of used packages"
+    },
     "settings": "Settings",
+    "@settings": {
+        "description": "Title of the settings page"
+    },
     "licenses": "Licenses",
-    "language": "Language",
+    "@licenses": {
+        "description": "Title of the licenses page"
+    },
+    "languages": "Languages",
+    "@languages": {
+        "description": "Title of the languages page"
+    },
     "about": "About",
+    "@about": {
+        "description": "Title of the about page"
+    },
     "noDueDate": "No due date",
+    "@noDueDate": {
+        "description": "Text that is shown when a todo has no due date"
+    },
     "enterATitle": "Please enter a title",
+    "@enterATitle": {
+        "description": "Text that is shown when the user tries to submit a todo without a title"
+    },
     "description": "Description",
+    "@description": {
+        "description": "Label for the description field"
+    },
     "dueDate": "Due date",
+    "@dueDate": {
+        "description": "Label for the due date field"
+    },
     "creationDateCol": "Creation date: ",
+    "@creationDateCol": {
+        "description": "Label for the creation date field"
+    },
     "urgent": "Urgent",
+    "@urgent": {
+        "description": "Name of the urgent dimension of the Eisenhower Matrix"
+    },
     "notUrgent": "Not urgent",
+    "@notUrgent": {
+        "description": "Name of the not urgent dimension of the Eisenhower Matrix"
+    },
     "important": "Important",
+    "@important": {
+        "description": "Name of the important dimension of the Eisenhower Matrix"
+    },
     "unimportant": "Unimportant",
+    "@unimportant": {
+        "description": "Name of the unimportant dimension of the Eisenhower Matrix"
+    },
     "markAsDone": "Mark as done",
+    "@markAsDone": {
+        "description": "Button to mark a todo as done"
+    },
     "archiveVerb": "Archive",
+    "@archiveVerb": {
+        "description": "Buttontext to archive a todo"
+    },
     "archiveNoun": "Archive",
+    "@archiveNoun": {
+        "description": "Title of the archive page"
+    },
     "edit": "Edit",
+    "@edit": {
+        "description": "Button to save an edited todo"
+    },
     "title": "Title",
+    "@title": {
+        "description": "Label for the title field"
+    },
     "submit": "Submit",
+    "@submit": {
+        "description": "Button to submit a new todo"
+    },
     "noTodosYet": "No todos yet",
+    "@noTodosYet": {
+        "description": "Text that is shown when the todo list is empty"
+    },
     "newTodo": "New todo",
+    "@newTodo": {
+        "description": "Hint to create a new todo"
+    },
     "appTitle": "4D Todo",
+    "@appTitle": {
+        "description": "Title of the app"
+    },
     "noWidgetForIndex": "No widget for index {index}",
-    "home": "Home"
+    "@noWidgetForIndex": {
+        "description": "Error message when no widget is found for a given index",
+        "placeholders": {
+            "index": {
+                "type": "int"
+            }
+        }
+    },
+    "home": "Home",
+    "@home": {
+        "description": "Title of the home page"
+    },
+    "systemLanguage": "System language (default)",
+    "@systemLanguage": {
+        "description": "Title for using the system language"
+    },
+    "english": "English (en)",
+    "@english": {
+        "description": "Name of the English language"
+    },
+    "german": "German (de)",
+    "@german": {
+        "description": "Name of the German language"
+    }
 }

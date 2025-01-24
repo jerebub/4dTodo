@@ -1,35 +1,152 @@
 {
+    "@@locale": "de",
     "nothingArchivedYet": "Noch nichts archiviert",
+    "@nothingArchivedYet": {
+        "description": "Text, der angezeigt wird, wenn noch keine Todos archiviert wurden."
+    },
     "about1": "Eine einfache Todo App, die ich (Jeremias Bub) mit Flutter entwickelt habe.\n\nSie basiert auf der Idee des vierdimensionalen Zeitmanagements und nutzt die vier Kategorien der ",
+    "@about1": {
+        "description": "Text, der die App beschreibt."
+    },
     "eisenhowerMatrix": "Eisenhower Matrix",
+    "@eisenhowerMatrix": {
+        "description": "Übersetzung der Eisenhower Matrix"
+    },
     "eisenhowerMatrixWiki": "https://de.wikipedia.org/wiki/Eisenhower-Prinzip",
+    "@eisenhowerMatrixWiki": {
+        "description": "Link zur Wikipedia-Seite des Eisenhower-Prinzips"
+    },
     "about2": ".\nDiese App ist ein weiterlaufendes Projekt. Demnächst folgen weitere Features.\n\nDu kannst den Source Code auf GitHub finden: ",
+    "@about2": {
+        "description": "Text, der die App beschreibt, mit Verweis auf das Github-Repository."
+    },
     "about3": "\n\nDie App wird unter der ",
+    "@about3": {
+        "description": "Text, der die App beschreibt. Hierauf folgt der Name der Lizenz."
+    },
     "unlicenseLicense": "Unlicense Lizens",
+    "@unlicenseLicense": {
+        "description": "Name der Lizenz, unter der die App veröffentlicht wird."
+    },
     "about4": " veröffentlicht. Nutze den Code so, wie du magst.",
+    "@about4": {
+        "description": "Text, der die App beschreibt. Der Code ist frei"
+    },
     "packageViewDescriptor": "Hier sind die verwendeten Pakete, ihre Versionen und Lizenzen aufgelistet.",
+    "@packageViewDescriptor": {
+        "description": "Beschreibung des Abschnitts, in dem die verwendeten Pakete aufgelistet sind."
+    },
     "settings": "Einstellungen",
+    "@settings": {
+        "description": "Überschrift für die Einstellungen"
+    },
     "licenses": "Lizensen",
-    "language": "Sprache",
+    "@licenses": {
+        "description": "Überschrift für die Lizensen"
+    },
+    "languages": "Sprachen",
+    "@languages": {
+        "description": "Überschrift für die Sprachen"
+    },
     "about": "Über",
+    "@about": {
+        "description": "Überschrift für den Über-Bereich"
+    },
     "noDueDate": "Kein Enddatum",
+    "@noDueDate": {
+        "description": "Text, der angezeigt wird, wenn ein Todo kein Enddatum hat."
+    },
     "enterATitle": "Gib bitte einen Titel ein",
+    "@enterATitle": {
+        "description": "Text, der angezeigt wird, wenn kein Titel für ein neues Todo eingegeben wurde."
+    },
     "description": "Beschreibung",
+    "@description": {
+        "description": "Beschreibung des Feldes, in dem die Beschreibung des Todos eingegeben wird."
+    },
     "dueDate": "Enddatum",
+    "@dueDate": {
+        "description": "Beschreibung des Feldes, in dem das Enddatum des Todos eingegeben wird."
+    },
     "creationDateCol": "Erstellungsdatum: ",
+    "@creationDateCol": {
+        "description": "Beschreibung des Feldes, in dem das Erstellungsdatum des Todos angezeigt wird."
+    },
     "urgent": "Dringend",
+    "@urgent": {
+        "description": "Name der Dringenden Dimension der Eisenhower Matrix"
+    },
     "notUrgent": "Nicht dringend",
+    "@notUrgent": {
+        "description": "Name der Nicht dringenden Dimension der Eisenhower Matrix"
+    },
     "important": "Wichtig",
+    "@important": {
+        "description": "Name der Wichtigen Dimension der Eisenhower Matrix"
+    },
     "unimportant": "Unwichtig",
+    "@unimportant": {
+        "description": "Name der Unwichtigen Dimension der Eisenhower Matrix"
+    },
     "markAsDone": "Als erledigt markieren",
+    "@markAsDone": {
+        "description": "Text des Buttons, mit dem ein Todo als erledigt markiert wird."
+    },
     "archiveVerb": "Archivieren",
+    "@archiveVerb": {
+        "description": "Text des Buttons, mit dem ein Todo archiviert wird."
+    },
     "archiveNoun": "Archiv",
+    "@archiveNoun": {
+        "description": "Überschrift des Archivs"
+    },
     "edit": "Bearbeiten",
-    "title": "Tittel",
+    "@edit": {
+        "description": "Text des Buttons, mit dem eine Todo-bearbeitung gesichert wird."
+    },
+    "title": "Titel",
+    "@title": {
+        "description": "Beschreibung des Feldes, in dem der Titel des Todos eingegeben wird."
+    },
     "submit": "Bestätigen",
+    "@submit": {
+        "description": "Text des Buttons, mit dem eine Todo-Erstellung bestätigt wird."
+    },
     "noTodosYet": "Noch keine Todos",
+    "@noTodosYet": {
+        "description": "Text, der angezeigt wird, wenn noch keine Todos erstellt wurden."
+    },
     "newTodo": "Neues Todo",
+    "@newTodo": {
+        "description": "Überschrift für die Todo-Erstellung"
+    },
     "appTitle": "4D Todo",
+    "@appTitle": {
+        "description": "Titel der App"
+    },
     "noWidgetForIndex": "Kein Widget für Index {index}",
-    "home": "Start"
+    "@noWidgetForIndex": {
+        "description": "Text, der angezeigt wird, wenn kein Widget für einen bestimmten Index gefunden wurde.",
+        "placeholders": {
+            "index": {
+                "type": "int"
+            }
+        }
+    },
+    "home": "Start",
+    "@home": {
+        "description": "Überschrift für den Start-Bereich"
+    },
+    "systemLanguage": "Systemsprache (default)",
+    "@systemLanguage": {
+        "description": "Überschrift für die Systemsprache"
+    },
+    "english": "Englisch (en)",
+    "@english": {
+        "description": "Englische Sprache auswählen"
+    },
+    "german": "Deutsch (de)",
+    "@german": {
+        "description": "Deutsche Sprache auswählen"
+    }
 }

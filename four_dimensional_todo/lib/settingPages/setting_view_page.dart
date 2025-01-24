@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:four_dimensional_todo/settingPages/about_view_page.dart';
+import 'package:four_dimensional_todo/settingPages/language_viewer_page.dart';
 import 'package:four_dimensional_todo/settingPages/packages_view_page.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -15,7 +16,7 @@ class _SettingsViewerPageState extends State<SettingsViewerPage> {
   var selectedIndex = 0;
   static const List<Widget> pages = [
     PackagesViewerPage(),
-    Placeholder(), //LanguageViewerPage(title: 'Language'),
+    LanguageViewerPage(), //LanguageViewerPage(title: 'Language'),
     AboutViewerPage(),
   ];
   
@@ -59,7 +60,7 @@ class _SettingsViewerPageState extends State<SettingsViewerPage> {
               ),
               ExpansionTile(
                 title: Text(
-                  AppLocalizations.of(context)!.language,
+                  AppLocalizations.of(context)!.languages,
                   softWrap: false,
                 ),
                 children: [
@@ -125,7 +126,7 @@ class _SettingsViewerPageState extends State<SettingsViewerPage> {
                   ),
                   ListTile(
                     title: Text(
-                      AppLocalizations.of(context)!.language,
+                      AppLocalizations.of(context)!.languages,
                       softWrap: false,
                       style: selectedIndex == 1 ? selectedStyle : null,
                     ),
