@@ -20,7 +20,7 @@ This app should allow users to do at least the following things:
 - [x] edit Todo-Elements
 - [x] save Todo-Elements locally
 - [x] have a page mentioning the used packages and the corresponding licenses
-- [ ] multiple language support
+- [X] multiple language support
 
 ## possible features
 additionally some features should be implemented
